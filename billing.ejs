@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Billing Information</title>
+    <link rel="stylesheet" href="billing_style.css"> <!-- Link to external CSS file -->
+</head>
+<body>
+    <!-- navbar -->
+    <% layout("/layouts/boilerplate.ejs") %>
+
+    <!-- Billing Section -->
+    <section id="billing">
+        <div class="container">
+            <h2>Billing Information</h2>
+            <!-- Search bar for Transaction ID -->
+            <input type="text" id="transactionSearch" placeholder="Search by Transaction ID..." onkeyup="searchBillingHistory()">
+            <div class="card">
+                <table id="billingTable">
+                    <thead>
+                        <tr>
+                            <th>Transaction ID</th>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>TXN123456</td>
+                            <td>2024-08-01</td>
+                            <td>₹1,500.00</td>
+                            <td>Paid</td>
+                        </tr>
+                        <tr>
+                            <td>TXN654321</td>
+                            <td>2024-07-01</td>
+                            <td>₹2,000.00</td>
+                            <td>Paid</td>
+                        </tr>
+                        <tr>
+                            <td>TXN789012</td>
+                            <td>2024-06-01</td>
+                            <td>₹1,800.00</td>
+                            <td>Paid</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <script src="/js/dashboard.js"></script> <!-- Link to external JavaScript file -->
+</body>
+</html>

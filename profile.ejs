@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="profile_style.css"> <!-- Link to external CSS file -->
+</head>
+<body>
+    <!-- navbar -->
+    <% layout("/layouts/boilerplate.ejs") %>
+
+    <!-- Profile Section -->
+    <section id="profile">
+        <div class="container">
+            <h2>Profile</h2>
+            <div class="card">
+                <form action="/api/profile/update" method="POST">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" value="">
+
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" value="">
+
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" value="password123">
+
+                    <!-- Pass userId as a hidden field -->
+                    <input type="hidden" name="userId" value="">
+
+                    <button type="submit">Update Profile</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <script src="/js/dashboard.js"></script> <!-- Link to external JavaScript file -->
+</body>
+</html>

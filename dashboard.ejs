@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Energy Meter Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/user_style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <!-- navbar -->
+    <% layout("/layouts/boilerplate.ejs") %>
+    <!-- Dashboard Section -->
+    <section id="dashboard" class="container">
+        <h2 class="text-center mb-4">Dashboard</h2>
+
+        <div class="row g-4">
+            <!-- Current Balance Card -->
+            <div class="col-md-6">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h3 class="card-title">Current Balance</h3>
+                        <p class="card-text fs-4">₹<%= 100 + (billing ? billing.amount_paid : 0) %></p>
+                        <button class="btn btn-primary w-100">Recharge Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Real-Time Energy Consumption -->
+            <div class="col-md-6">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h3 class="card-title">Real Time Energy Consumption</h3>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-outline-primary consumption-btn" data-target="daily">Daily Consumption</button>
+                            <button class="btn btn-outline-primary consumption-btn" data-target="weekly">Weekly Consumption</button>
+                            <button class="btn btn-outline-primary consumption-btn" data-target="monthly">Monthly Consumption</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Consumption Details -->
+        <div id="consumptionDetails" class="mt-4">
+            <div id="daily" class="consumption-option" style="display:none;">
+                <h3 class="text-center">Daily Consumption</h3>
+                <p class="text-center"><%= consumption.consumption.daily %> kWh</p>
+            </div>
+            <div id="weekly" class="consumption-option" style="display:none;">
+                <h3 class="text-center">Weekly Consumption</h3>
+                <p class="text-center"><%= consumption.consumption.weekly %> kWh</p>
+            </div>
+            <div id="monthly" class="consumption-option" style="display:none;">
+                <h3 class="text-center">Monthly Consumption</h3>
+                <p class="text-center"><%= consumption.consumption.monthly %> kWh</p>
+            </div>
+        </div>
+
+        <!-- Consumption Graph -->
+        <div class="card shadow-sm mt-4">
+            <div class="card-body">
+                <h3 class="card-title text-center">Consumption Graph</h3>
+                <canvas id="consumptionChart" style="max-width: 100%;"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bootstrap and JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // JavaScript to toggle consumption details visibility
+        document.querySelectorAll('.consumption-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                const target = this.getAttribute('data-target');
+                const targetElement = document.getElementById(target);
+                
+                if (targetElement.style.display === 'none' || targetElement.style.display === '') {
+                    hideAllConsumption();
+                    targetElement.style.display = 'block';
+                } else {
+                    targetElement.style.display = 'none';
+                }
+            });
+        });
+
+        // Function to hide all consumption sections
+        function hideAllConsumption() {
+            document.querySelectorAll('.consumption-option').forEach(option => {
+                option.style.display = 'none';
+            });
+        }
+
+            // Chart.js configuration
+            const ctx = document.getElementById('consumptionChart').getContext('2d');
+        const consumptionChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+                datasets: [{
+                    label: 'Energy Consumption (kWh)',
+                    data: [12, 19, 3, 5, 2, 3, 10],
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
